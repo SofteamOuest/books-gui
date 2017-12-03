@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <title>Gestion de Livres</title>
+    <link rel="stylesheet
+
+" href="https://cdnjs.cloudflare.com/ajax/libs/foundation/6.4.3/css/foundation.css">
+    <script src="https://unpkg.com/vue"></script>
+    <script
+            src="https://code.jquery.com/jquery-3.2.1.slim.min.js"
+            integrity="sha256-k2WSCIexGzOj3Euiig+TlR8gA0EmPjuc79OEeY5L45g="
+            crossorigin="anonymous"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/axios/0.17.1/axios.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/foundation/6.4.3/js/foundation.js"></script>
+</head>
+<body>
+<div class="grid-container">
+    <div id="app" class="grid-x grid-margin-x">
+
+
+        <h1>{{ greeting }}</h1>
+        <table class="hover">
+            <thead>
+            <th>Titre</th>
+            <th>Auteurs</th>
+            </thead>
+            <tr v-for="book in books">
+                <td> {{book.title}}</td>
+                <td> {{book.authors}}</td>
+            </tr>
+        </table>
+    </div>
+</div>
+
+<script>
+    var app = new Vue({
+        el: '#app',
+        data: {
+            greeting: 'Ma Sélection de livres',
+            books: []
+        },
+        methods: {
+            humanizeURL: function (url) {
+                return url
+                    .replace(/^https?:\/\//, '')
+                    .replace(/\/$/, '')
+            }
+        },
+        created: function () {
+            axios.get('http://localhost:8080/books')
+                .then(response => {
+                    // JSON responses are automatically parsed.
+                    this.books = response.data;
+                })
+                .catch(e => {
+                    //this.errors.push(e)
+                })
+        }
+    })
+</script>
+
+<script>
+    $(document).foundation();
+</script>
+</body>
+</html>

@@ -48,7 +48,7 @@
             }
         },
         created: function () {
-            axios.get('http://api-books:8080/books')
+            axios.get('/books')
                 .then(response => {
                     // JSON responses are automatically parsed.
                     this.books = response.data;
